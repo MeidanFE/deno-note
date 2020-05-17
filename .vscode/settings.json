@@ -1,0 +1,6 @@
+{
+  "deno.enable": true,
+  "deno.importmap": null,
+  "deno.alwaysShowStatus": true,
+  "deno.tsconfig": "./tsconfig.json"
+}
