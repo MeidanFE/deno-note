@@ -1,6 +1,24 @@
-import { serve } from "./deps.ts"
-const s = serve({ port: 3000 })
+import { Application } from "./deps.ts";
+import { error, logger } from "./middlewares/index.ts";
+import router from "./routes/index.ts";
 
-for await (const req of s) {
-  req.respond({ body: "Hello World\n" })
-}
+const app = new Application({
+  keys: ["Simon-bin"],
+  state: {
+    author: "Simon-bin",
+  },
+});
+
+error(app as any);
+logger(app as any);
+
+router(app as any);
+
+app.addEventListener("listen", ({ hostname, port, secure }) => {
+  console.log(
+    `Listening on: ${secure ? "https://" : "http://"}${
+      hostname ?? "localhost"
+    }:${port}`
+  );
+});
+await app.listen({ port: 8000 });

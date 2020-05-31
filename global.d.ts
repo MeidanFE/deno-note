@@ -1,0 +1,3 @@
+interface GlobalState {
+  author: string;
+}
