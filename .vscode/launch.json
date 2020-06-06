@@ -28,7 +28,7 @@
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "deno",
-      "runtimeArgs": ["test", "-A", "--unstable"],
+      "runtimeArgs": ["test", "-A", "--unstable", "-c", "tsconfig.json"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true

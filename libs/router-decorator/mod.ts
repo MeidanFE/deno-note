@@ -33,7 +33,8 @@ type RouterDecoratorType = {
 };
 
 export default async function (rootRouter: Router, ops: RouterDecoratorType) {
-  const { dir } = ops;
+  let { dir } = ops;
+  dir = Deno.cwd() + dir;
 
   for (const dirEntry of Deno.readDirSync(dir)) {
     const filePath = join(dir, dirEntry.name);

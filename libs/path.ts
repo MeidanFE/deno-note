@@ -3,7 +3,7 @@
  * @param args
  */
 export const join = (...args: Array<string | string[]>) =>
-  Deno.cwd() + "/" + Array.prototype.concat.apply([], args).join("/");
+   "/" + Array.prototype.concat.apply([], args).join("/");
 
 /**
  * 路径补充前缀
