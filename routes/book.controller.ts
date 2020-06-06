@@ -1,5 +1,5 @@
 import { RouterContext } from "../deps.ts";
-import { Get, POST } from "./decorators.ts";
+import { Get, Post } from "./decorators.ts";
 
 const books = new Map<string, any>();
 books.set("1", {
@@ -18,7 +18,7 @@ class BookController {
     context.response.body = "Hello world!";
   }
 
-  @POST("/book")
+  @Post("/book")
   selectAll(context: RouterContext) {
     context.response.body = Array.from(books.values());
   }

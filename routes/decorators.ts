@@ -24,22 +24,22 @@ export const RequestMapping = (ops: RequestMappingOps) => {
     propertyKey: string,
     descriptor: TypedPropertyDescriptor<any>
   ) {
+    target[propertyKey] = 1;
+    console.log(target, propertyKey);
     const fn = rootRouter[method];
     fn.call(rootRouter, path, descriptor.value);
   };
 };
 
-export const Get = (path: string) =>
-  RequestMapping({ path, method: HTTPMETHOD.GET });
+const RequestFactory = (method: HTTPMETHOD) => (path: string) =>
+  RequestMapping({ path, method });
 
-export const PUT = (path: string) =>
-  RequestMapping({ path, method: HTTPMETHOD.PUT });
+export const Get = RequestFactory(HTTPMETHOD.GET);
 
-export const PATCH = (path: string) =>
-  RequestMapping({ path, method: HTTPMETHOD.PATCH });
+export const Put = RequestFactory(HTTPMETHOD.PUT);
 
-export const POST = (path: string) =>
-  RequestMapping({ path, method: HTTPMETHOD.POST });
+export const Patch = RequestFactory(HTTPMETHOD.PATCH);
 
-export const DELETE = (path: string) =>
-  RequestMapping({ path, method: HTTPMETHOD.DELETE });
+export const Post = RequestFactory(HTTPMETHOD.POST);
+
+export const Delete = RequestFactory(HTTPMETHOD.DELETE);
