@@ -1,5 +1,5 @@
 import { RouterContext } from "../deps.ts";
-import { Get, Post } from "./decorators.ts";
+import { Get, Post, Controller } from "../libs/router-decorator/mod.ts";
 
 const books = new Map<string, any>();
 books.set("1", {
@@ -8,6 +8,7 @@ books.set("1", {
   author: "Conan Doyle, Arthur",
 });
 
+@Controller()
 class BookController {
   constructor() {
     console.log(this);

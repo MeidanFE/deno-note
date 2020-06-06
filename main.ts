@@ -1,6 +1,6 @@
-import { Application } from "./deps.ts";
+import { Application, Router } from "./deps.ts";
 import { error, logger } from "./middlewares/index.ts";
-import router from "./routes/index.ts";
+import routerDecorator from "./libs/router-decorator/mod.ts";
 
 const app = new Application({
   keys: ["Simon-bin"],
@@ -12,7 +12,12 @@ const app = new Application({
 error(app as any);
 logger(app as any);
 
-router(app as any);
+const router = await routerDecorator(new Router(), {
+  dir: "./controllers",
+});
+
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
   console.log(

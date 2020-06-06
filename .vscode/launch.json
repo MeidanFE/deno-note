@@ -10,7 +10,15 @@
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "deno",
-      "runtimeArgs": ["run", "--inspect-brk", "-A", "--unstable", "main.ts"],
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "-A",
+        "--unstable",
+        "-c",
+        "tsconfig.json",
+        "main.ts"
+      ],
       "console": "integratedTerminal",
       "port": 9229
     },
