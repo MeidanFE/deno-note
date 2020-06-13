@@ -13,7 +13,7 @@ error(app as any);
 logger(app as any);
 
 const router = await routerDecorator(new Router(), {
-  dir: "./controllers",
+  dir: "controllers",
 });
 
 app.use(router.routes());
