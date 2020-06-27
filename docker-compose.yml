@@ -1,0 +1,37 @@
+version: "3"
+services:
+  db:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      TZ: Asia/Shanghai
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./data:/data/db
+    networks:
+      - overlay
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: deno-app:1.0.0
+    container_name: deno-app
+    restart: always
+    tty: true
+    volumes:
+      - ./logs:/app/logs
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - overlay
+    depends_on:
+      - db
+
+networks:
+  overlay:
+    driver: bridge

@@ -8,6 +8,4 @@ export const logRequestTime: Middleware = async (ctx, next) => {
   console.log(`${ctx.request.method} ${ctx.request.url} - ${ms}ms`);
 };
 
-export default (app: Application) => {
-  app.use(logRequestTime);
-};
+

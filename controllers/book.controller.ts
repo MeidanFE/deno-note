@@ -1,35 +1,25 @@
 import { RouterContext } from "../deps.ts";
 import { Get, Post, Controller } from "../libs/router-decorator/mod.ts";
+import { BookModel, IBook } from "../models/book.entity.ts";
 
-const books = new Map<string, any>();
-books.set("1", {
-  id: "1",
-  title: "The Hound of the Baskervilles",
-  author: "Conan Doyle, Arthur",
-});
-
-@Controller()
+@Controller("/book")
 class BookController {
-  constructor() {
-    console.log(this);
-  }
+	constructor() {
+		console.log(this);
+	}
 
-  @Get("/")
-  hello(context: RouterContext) {
-    context.response.body = "Hello world!";
-  }
+	@Post("/book")
+	async selectAll(ctx: RouterContext) {
+		const { request, response } = ctx;
+		const body = await request.body();
+		const data:Omit<IBook, "id"> = body.value;
+		BookModel.insertOne(data);
+	}
 
-  @Post("/book")
-  selectAll(context: RouterContext) {
-    context.response.body = Array.from(books.values());
-  }
-
-  @Get("/book/:id")
-  selectOne(context: RouterContext) {
-    if (context.params && context.params.id && books.has(context.params.id)) {
-      context.response.body = books.get(context.params.id);
-    }
-  }
+	@Get("/book/:id")
+	async selectOne(ctx: RouterContext) {
+		const { request, response } = ctx;
+	}
 }
 
 export default BookController;

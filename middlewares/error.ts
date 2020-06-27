@@ -1,31 +1,25 @@
-import { Application, isHttpError, Status, Middleware } from "../deps.ts";
+import { Application, isHttpError, HttpError, Middleware } from "../deps.ts";
 
 /**
  * 错误处理
  */
-export const httpError: Middleware = async (ctx, next) => {
-  try {
-    await next();
-  } catch (err) {
-    if (isHttpError(err)) {
-      switch (err.status) {
-        case Status.NotFound:
-          break;
-        default:
-          break;
-      }
-    } else {
-      // rethrow if you can't handle the error
-      throw err;
-    }
-  }
+export const errHandler: Middleware = async (ctx, next) => {
+	try {
+		await next();
+	} catch (err) {
+		const { message = "unkown error", status = 500, stack = null } = err;
+
+		ctx.response.status = status;
+		ctx.response.body = { message, status, stack };
+		ctx.response.type = "json";
+	}
 };
 
-export default (app: Application) => {
-  app.addEventListener("error", (evt) => {
-    // Will log the thrown error to the console.
-    console.log(evt.error);
-  });
+export const error = (app: Application) => {
+	app.addEventListener("error", (evt) => {
+		// Will log the thrown error to the console.
+		console.log(evt.error);
+	});
 
-  app.use(httpError);
+	app.use(errHandler);
 };

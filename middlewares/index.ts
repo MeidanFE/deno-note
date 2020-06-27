@@ -1,2 +1,2 @@
-export { default as error } from "./error.ts";
-export { default as logger } from "./logger.ts";
+export { error } from "./error.ts";
+export { logRequestTime } from "./logger.ts";
